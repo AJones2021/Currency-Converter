@@ -1,6 +1,8 @@
 # CurrencyConverter
 #Using Tkinter
 
+#Using PIL
+
 #Useful for converting certain currancy from one country to the currency of another country.
 
 #handy to have for traveling
