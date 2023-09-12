@@ -1,15 +1,16 @@
-#
-#
-#
+# Anna Jones
+# 09/12/2023
+# Python Currency converter
 
 
-from tkinter import Tk, ttk
+from tkinter import ttk
 from tkinter import *
+from tkinter import messagebox
 from PIL import Image, ImageTk
 import json
 import requests
 
-# Color backgrounds
+# Colors
 color4 = '#FFFFFF'
 color3 = '#E6F8FF'
 color1 = "#e7f2fb"
@@ -17,16 +18,16 @@ color2 = "#333333"
 color5 = "#9eccf5"
 
 #opening
-window = Tk()
-window.geometry('300x300')
-window.title('Converter')
-window.configure(bg=color1)
+root = Tk()
+root.geometry('300x300')
+root.title('Currency Converter')
+root.configure(bg=color1)
 
 # Frames
-top = Frame(window, width=300, height=60, bg=color5)
+top = Frame(root, width=300, height=60, bg=color5)
 top.grid(row=0, column=0)
 
-main = Frame(window, width=300, height=200, bg=color1)
+main = Frame(root, width=300, height=200, bg=color1)
 main.grid(row=1, column=0)
 
 def converter_api():
@@ -73,7 +74,7 @@ icon = ImageTk.PhotoImage(icon)
 
 #Tab name
 title = Label(top, image=icon, compound=LEFT, text="Currency Converter", height=2, padx=15
-                 , pady=35, anchor=CENTER, font=('Helvetica 15 bold'), bg=color5)
+                 , pady=35, anchor=CENTER, font=('arial 15 bold'), bg=color5)
 title.place(x=0, y=0)
 
 #main frame
@@ -96,13 +97,23 @@ entry_text2.set( "Select one..." )
 to_box['values'] = (currency)
 to_box.place(x=48, y=100)
 
+# Function to check valid input from user
+def check_number():
+
+    if float(value.get().isdigit()):
+        converter_api()
+    else:
+        messagebox.showerror("error", "enter number to convert.")
+
 value = Entry(main, width=12, justify=CENTER, font=("Helvetica 10"), relief="groove")
 value.place(x=158, y=50)
 
 result = Label(main, text=" ", width=11, height=1,padx=0, pady=0, relief="ridge", anchor=CENTER, font=('Helvetica 10 '), bg=color4, fg=color2)
 result.place(x=155, y=100)
 
-button = Button(main, text="Convert", width=15, padx=10, height=1, bg=color5, fg=color1, relief="ridge", justify=CENTER, font=("Helvetica 12"), command=converter_api)
+# Button calls validation function
+# if correct proceed to converter_api function
+button = Button(main, text="Convert", width=15, padx=10, height=1, bg=color5, fg=color1, relief="ridge", justify=CENTER, font=("Helvetica 12"), command=check_number)
 button.place(x=65, y=150)
 
-window.mainloop()
+root.mainloop()
