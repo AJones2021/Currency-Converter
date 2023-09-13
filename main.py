@@ -44,12 +44,24 @@ def converter_api():
         money_sign = '$'
     elif to_currency == 'UAH':
         money_sign = '₴'
-    elif to_currency == 'ERU':
+    elif to_currency == 'EUR':
         money_sign = '€'
     elif to_currency == 'CAD':
         money_sign = 'C$'
     elif to_currency == 'AUD':
         money_sign = 'A$'
+    elif to_currency == 'SBD':
+        money_sign = 'SI$'
+    elif to_currency == 'NOK':
+        money_sign = 'kr'
+    elif to_currency == 'DKK':
+        money_sign = 'kr'
+    elif to_currency == 'GBP':
+        money_sign = '£'
+    elif to_currency == 'PLN':
+        money_sign = 'zł'
+    elif to_currency == 'RUB':
+        money_sign = '₽'
     else: money_sign = "$"
 
     headers = {
@@ -79,7 +91,7 @@ title.place(x=0, y=0)
 
 #main frame
 
-currency = ['UAH', 'ERU', 'CAD', 'USD', 'AUD','SBD', 'NOK', 'IED', 'FIM', 'DKK', 'ATS','GBP','PLN','RUB']
+currency = ['UAH','RUB','EUR', 'CAD', 'USD', 'AUD','SBD', 'NOK', 'DKK','GBP','PLN']
 
 from_label = Label(main, text="From", width=10, height=0, pady=0, padx=0, relief="flat", anchor=NW, font=('Helvetica 10'), bg=color1, fg=color5)
 from_label.place(x=48, y=30)
@@ -100,11 +112,13 @@ to_box.place(x=48, y=100)
 # Function to check valid input from user
 def check_number():
 
-    if float(value.get().isdigit()):
-        converter_api()
-    else:
+    try:
+        if float(value.get()):
+            converter_api()
+    except ValueError:
         messagebox.showerror("error", "enter number to convert.")
-
+value_label = Label(main, text="Amount", width=10, height=1, pady=0, padx=0, relief="flat", anchor=NW, font=('Helvetica 10'), bg=color1, fg=color5)
+value_label.place(x=155, y=29)
 value = Entry(main, width=12, justify=CENTER, font=("Helvetica 10"), relief="groove")
 value.place(x=158, y=50)
 
