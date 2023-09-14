@@ -17,13 +17,11 @@ color1 = "#e7f2fb"
 color2 = "#333333"
 color5 = "#9eccf5"
 
-#opening
 root = Tk()
 root.geometry('300x300')
 root.title('Currency Converter')
 root.configure(bg=color1)
 
-# Frames
 top = Frame(root, width=300, height=60, bg=color5)
 top.grid(row=0, column=0)
 
@@ -31,8 +29,7 @@ main = Frame(root, width=300, height=200, bg=color1)
 main.grid(row=1, column=0)
 
 def converter_api():
-
-    url = "https://currency-converter18.p.rapidapi.com/api/v1/convert"
+    url = "https://currency-converter18.p.rapidapi.com/api/v1/supportedCurrencies"
 
     from_currency = from_box.get()
     to_currency = to_box.get()
@@ -62,7 +59,9 @@ def converter_api():
         money_sign = 'zł'
     elif to_currency == 'RUB':
         money_sign = '₽'
-    else: money_sign = "$"
+    else:
+        money_sign = "4$"
+
 
     headers = {
         "X-RapidAPI-Key": "f7b873b383mshf919bb732781e22p19d747jsneb32b8d4cb32",
@@ -71,12 +70,16 @@ def converter_api():
 
     response = requests.get(url, headers=headers, params=querystring)
 
-    data = json.loads(response.text)
-    amount_converted = data["result"]["convertedAmount"]
-    format_two_decimal = money_sign + "{:,.2f}".format(amount_converted)
+    #print(response.json())
 
-    result['text'] = format_two_decimal
-    print(amount_converted, format_two_decimal)
+    data = json.loads(response.text)
+    print(data)
+    amount_converted = data["result"]["convertedAmount"]
+    print(amount_converted)
+    #format_two_decimal = money_sign + "{:,.2f}".format(amount_converted)
+
+    #result['text'] = format_two_decimal
+    #print(amount_converted, format_two_decimal)
 
 
 # Image one
@@ -84,12 +87,11 @@ icon = Image.open('moneyconvert.png')
 icon = icon.resize((43, 43))
 icon = ImageTk.PhotoImage(icon)
 
-#Tab name
+
 title = Label(top, image=icon, compound=LEFT, text="Currency Converter", height=2, padx=15
                  , pady=35, anchor=CENTER, font=('arial 15 bold'), bg=color5)
 title.place(x=0, y=0)
 
-#main frame
 
 currency = ['UAH','RUB','EUR', 'CAD', 'USD', 'AUD','SBD', 'NOK', 'DKK','GBP','PLN']
 
@@ -117,6 +119,7 @@ def check_number():
             converter_api()
     except ValueError:
         messagebox.showerror("error", "enter number to convert.")
+
 value_label = Label(main, text="Amount", width=10, height=1, pady=0, padx=0, relief="flat", anchor=NW, font=('Helvetica 10'), bg=color1, fg=color5)
 value_label.place(x=155, y=29)
 value = Entry(main, width=12, justify=CENTER, font=("Helvetica 10"), relief="groove")
