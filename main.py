@@ -63,7 +63,7 @@ def converter_api():
     elif to_currency == 'RUB':
         money_sign = '₽'
     else:
-        money_sign = "4$"
+        money_sign = "$"
 
     headers = {
         "X-RapidAPI-Key": "f7b873b383mshf919bb732781e22p19d747jsneb32b8d4cb32",
