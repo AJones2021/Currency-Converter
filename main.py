@@ -32,35 +32,35 @@ def converter_api():
 
     url = "https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency"
 
-    from_currency = from_box.get()
-    to_currency = to_box.get()
+    have = from_box.get()
+    want = to_box.get()
     amount = value.get()
     money_sign = '$'
-    querystring = {"from": from_currency, "to": to_currency, "amount": amount}
+    querystring = {"have": have, "want": want, "amount": amount}
 
 
 
-    if to_currency == 'USD':
+    if want == 'USD':
         money_sign = '$'
-    elif to_currency == 'UAH':
+    elif want == 'UAH':
         money_sign = '₴'
-    elif to_currency == 'EUR':
+    elif want == 'EUR':
         money_sign = '€'
-    elif to_currency == 'CAD':
+    elif want == 'CAD':
         money_sign = 'C$'
-    elif to_currency == 'AUD':
+    elif want == 'AUD':
         money_sign = 'A$'
-    elif to_currency == 'SBD':
+    elif want == 'SBD':
         money_sign = 'SI$'
-    elif to_currency == 'NOK':
+    elif want == 'NOK':
         money_sign = 'kr'
-    elif to_currency == 'DKK':
+    elif want == 'DKK':
         money_sign = 'kr'
-    elif to_currency == 'GBP':
+    elif want == 'GBP':
         money_sign = '£'
-    elif to_currency == 'PLN':
+    elif want == 'PLN':
         money_sign = 'zł'
-    elif to_currency == 'RUB':
+    elif want == 'RUB':
         money_sign = '₽'
     else:
         money_sign = "$"
@@ -72,17 +72,14 @@ def converter_api():
 
     response = requests.get(url, headers=headers, params=querystring)
 
+    data = json.loads(response.text)
+
+    amount_converted = data["new_amount"]
+    result['text'] = (f"{money_sign}{amount_converted:.2f}")
+
+    print(result)
     print(response.json())
 
-    data = json.loads(response.text)
-    amount_converted = data["result"]["convertedAmount"]
-    format_two_decimal = money_sign + "{:,.2f}".format(amount_converted)
-
-    result['text'] = format_two_decimal
-    print(amount_converted, format_two_decimal)
-
-
-# Image one
 icon = Image.open('moneyconvert.png')
 icon = icon.resize((43, 43))
 icon = ImageTk.PhotoImage(icon)
