@@ -29,13 +29,16 @@ main = Frame(root, width=300, height=200, bg=color1)
 main.grid(row=1, column=0)
 
 def converter_api():
-    url = "https://currency-converter18.p.rapidapi.com/api/v1/supportedCurrencies"
+
+    url = "https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency"
 
     from_currency = from_box.get()
     to_currency = to_box.get()
     amount = value.get()
     money_sign = '$'
     querystring = {"from": from_currency, "to": to_currency, "amount": amount}
+
+
 
     if to_currency == 'USD':
         money_sign = '$'
@@ -62,24 +65,21 @@ def converter_api():
     else:
         money_sign = "4$"
 
-
     headers = {
         "X-RapidAPI-Key": "f7b873b383mshf919bb732781e22p19d747jsneb32b8d4cb32",
-        "X-RapidAPI-Host": "currency-converter18.p.rapidapi.com"
+        "X-RapidAPI-Host": "currency-converter-by-api-ninjas.p.rapidapi.com"
     }
 
     response = requests.get(url, headers=headers, params=querystring)
 
-    #print(response.json())
+    print(response.json())
 
     data = json.loads(response.text)
-    print(data)
     amount_converted = data["result"]["convertedAmount"]
-    print(amount_converted)
-    #format_two_decimal = money_sign + "{:,.2f}".format(amount_converted)
+    format_two_decimal = money_sign + "{:,.2f}".format(amount_converted)
 
-    #result['text'] = format_two_decimal
-    #print(amount_converted, format_two_decimal)
+    result['text'] = format_two_decimal
+    print(amount_converted, format_two_decimal)
 
 
 # Image one
